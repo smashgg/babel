@@ -8,8 +8,11 @@ make
 From this project's root directory:
 #+BEGIN_SRC bash
 make
-cp ./packages/babel-register/lib/* $GG_HOME/gg-web/node_modules/packages/babel-register/lib
-cp ./packages/babel-register/lib/* $GG_HOME/gg-web/admin/node_modules/packages/babel-register/lib
+# This assumes you have already npm installed in web
+# If you npm install after doing this your changes will be erased
+# Might be able to do this with npm-workspace but I havent investigated
+cp ./packages/babel-register/lib/* $GG_HOME/gg-web/node_modules/babel-register/packages/babel-register/lib
+cp ./packages/babel-register/lib/* $GG_HOME/gg-web/admin/node_modules/babel-register/packages/babel-register/lib
 #+END_SRC
 Then run grunt server in gg-web and see if it works
 
