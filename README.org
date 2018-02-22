@@ -1,0 +1,21 @@
+* Working With This Fork
+** Building
+*** npm i
+*** make
+** Testing
+*** From this project's root directory
+#+BEGIN_SRC bash
+make
+cp ./packages/babel-register/lib/* $GG_HOME/gg-web/node_modules/packages/babel-register/lib
+cp ./packages/babel-register/lib/* $GG_HOME/gg-web/admin/node_modules/packages/babel-register/lib
+#+END_SRC
+*** Then run grunt server in gg-web and see if it works
+*** we use babel differently locally and in deployed environments so make sure you can successfully deploy both web and admin to feature branches/staging before going to prod
+** Deploy (ie get changes in web)
+*** in this directory commit changes
+*** git push origin bug-fix/babel-register-symlink
+*** go [[https://github.com/smashgg/babel-register/commits/bug-fix/babel-register-symlink][here] to find your commit.
+*** copy the hash
+*** Update babel-register line in $GG_HOME/gg-web/package.json and $GG_HOME/gg-web/admin/package.json with the following link, replacing COMMIT_HASH with what you copied above.
+**** git://github.com/smashgg/babel-register.git#COMMIT_HASH
+
