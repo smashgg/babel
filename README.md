@@ -1,3 +1,6 @@
+<p>
+smash.gg people we are using <a href="https://github.com/smashgg/babel-register/tree/bug-fix/babel-register-symlink">this branch</a> which has instructions for development.
+</p>
 <p align="center">
   <a href="https://babeljs.io/">
     <img alt="babel" src="https://raw.githubusercontent.com/babel/logo/master/babel.png" width="546">
