@@ -88,6 +88,33 @@ var maps = {};
 
 var cwd = process.cwd();
 
+var projectRootDir = __dirname.split("/").reduce(function ( /*istanbul ignore next*/_ref, dir) {
+  /*istanbul ignore next*/var path = _ref.path,
+      seenNodeModules = _ref.seenNodeModules;
+
+  if (seenNodeModules) {
+    return {
+      path: path,
+      seenNodeModules: seenNodeModules
+    };
+  }
+
+  if (dir === "node_modules") {
+    return {
+      path: path,
+      seenNodeModules: true
+    };
+  }
+
+  return {
+    path: /*istanbul ignore next*/path + "/" + dir
+  };
+}, { path: "" }).path.slice(1);
+
+var splitDirname = projectRootDir.split("/");
+var isAdmin = splitDirname[splitDirname.length - 1] === "admin";
+var rootDir = isAdmin ? splitDirname.slice(0, -1).join("/") : projectRootDir;
+
 function getRelativePath(filename) {
   return (/*istanbul ignore next*/_path2.default.relative(cwd, filename)
   );
@@ -99,6 +126,14 @@ function mtime(filename) {
 
 function compile(filename) {
   var result = /*istanbul ignore next*/void 0;
+
+  var currPlugins = transformOpts.plugins;
+  var currPresets = transformOpts.presets;
+  if (!filename.includes(rootDir)) {
+    console.log("IGNORE >:( ", filename, transformOpts);
+    delete transformOpts.plugins;
+    delete transformOpts.presets;
+  }
 
   // merge in base options and resolve all the plugins and presets relative to this file
   var opts = new /*istanbul ignore next*/_babelCore.OptionManager().init( /*istanbul ignore next*/(0, _extend2.default)( /*istanbul ignore next*/(0, _cloneDeep2.default)(transformOpts), {
@@ -133,6 +168,9 @@ function compile(filename) {
   }
 
   maps[filename] = result.map;
+
+  transformOpts.plugins = currPlugins;
+  transformOpts.presets = currPresets;
 
   return result.code;
 }
