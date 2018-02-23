@@ -130,7 +130,6 @@ function compile(filename) {
   var currPlugins = transformOpts.plugins;
   var currPresets = transformOpts.presets;
   if (!filename.includes(rootDir)) {
-    console.log("IGNORE >:( ", filename, transformOpts);
     delete transformOpts.plugins;
     delete transformOpts.presets;
   }
